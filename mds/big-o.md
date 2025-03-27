@@ -1,43 +1,5 @@
 # Big O Notation
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Why Big O?](#why-big-o)
-- [Key Concepts](#key-concepts)
-- [Performance Metric](#performance-metric)
-  - [Best, Average, and Worst Case](#best-average-and-worst-case)
-- [How it Works](#how-it-works)
-- [Big O Notations](#big-o-notations)
-  - [1. Constant Time Complexity `O(1)`](#1-constant-time-complexity-o1)
-  - [2. Linear Time Complexity `O(n)`](#2-linear-time-complexity-on)
-  - [3. Quadratic Time Complexity `O(n^2)`](#3-quadratic-time-complexity-on2)
-  - [4. Logarithmic Time Complexity `O(log n)`](#4-logarithmic-time-complexity-olog-n)
-  - [5. Linearithmic Time Complexity `O(n log n)`](#5-linearithmic-time-complexity-on-log-n)
-  - [6. Exponential Time Complexity `O(2^n)`](#6-exponential-time-complexity-o2n)
-  - [7. Factorial Time Complexity `O(n!)`](#7-factorial-time-complexity-on)
-  - [Efficiency](#efficiency)
-- [Examples of Big O Notations](#examples-of-big-o-notations)
-  - [1. Constant Time Complexity Example `O(1)`](#1-constant-time-complexity-example-o1)
-  - [2. Linear Time Complexity Example `O(n)`](#2-linear-time-complexity-example-on)
-  - [3. Quadratic Time Complexity Example `O(n^2)`](#3-quadratic-time-complexity-example-on2)
-- [Simplifying Big O Expressions](#simplifying-big-o-expressions)
-  - [Common Operations and Their Complexities](#common-operations-and-their-complexities)
-  - [Ignoring Constants](#ignoring-constants)
-  - [Ignoring Lower-Order Terms](#ignoring-lower-order-terms)
-- [Space Complexity](#space-complexity)
-  - [Space Complexity in JavaScript](#space-complexity-in-javascript)
-  - [Example of Constant Space Complexity](#example-of-constant-space-complexity)
-  - [Example of Linear Space Complexity](#example-of-linear-space-complexity)
-- [Logarithmic Complexity](#logarithmic-complexity)
-  - [Understanding Logarithmic Complexity](#understanding-logarithmic-complexity)
-- [Linearithmic Complexity](#linearithmic-complexity)
-  - [Understanding Linearithmic Complexity](#understanding-linearithmic-complexity)
-- [Big O and Recursion](#big-o-and-recursion)
-- [Recapitulation](#recapitulation)
-- [Practical Considerations](#practical-considerations)
-- [Conclusion](#conclusion)
-
 ## Introduction
 
 **Big O Notation** is a mathematical concept used to describe the efficiency of algorithms, particularly focusing on their time and space complexity. It provides a high-level understanding of how an algorithm's performance changes with the size of the input `n`.
@@ -82,6 +44,16 @@ Big O notation helps describe the relationship between the size of the input `n`
 For clarity, we simplify `O(f(n))` to `O(n)` to focus on the main factor affecting the algorithm's growth rate.
 
 ## Big O Notations
+
+Consider an array of 1000 elements:
+
+- `O(1)`: 1 operation
+- `O(log n)`: ~10 operations
+- `O(n)`: 1000 operations
+- `O(n log n)`: ~10000 operations
+- `O(n²)`: 1,000,000 operations
+
+This helps demonstrate why an `O(n²)` algorithm might work fine for small inputs but become problematic at scale.
 
 ### 1. Constant Time Complexity `O(1)`
 
@@ -141,9 +113,9 @@ The expression `(n * (n + 1)) / 2` involves a fixed number of operations, regard
 ```js
 function addUpTo(n) {
   let total = 0;
-  for (let i = 1; i <= n; i++) {
-    total += i;
-  }
+
+  for (let i = 1; i <= n; i++) total += i;
+
   return total;
 }
 ```
@@ -272,3 +244,150 @@ Analyzing recursive functions often involves identifying the recurrence relation
 ## Conclusion
 
 Big O Notation is a crucial tool in computer science and software development, offering a way to evaluate and compare the efficiency of algorithms. Understanding it enables better decision-making when designing and optimizing code, ensuring scalability and performance in real-world applications.
+
+## The Big O of Objects
+
+**Objects:** unordered key value pairs.
+
+```js
+const user = { name: "John", hobby: "Coding" };
+```
+
+### Basic Operations on Objects
+
+_Time Complexity:_
+
+- **Accessing Properties:** `O(1)` - Accessing a property using the dot or bracket notation has constant time complexity. This is because JavaScript objects are implemented as hash tables, allowing direct access to properties without needing to iterate over the object.
+
+- **Inserting/Updating Properties:** `O(1)` - Adding a new property or updating an existing one in an object also has constant time complexity. The operation involves computing the hash of the property key and storing the associated value in the appropriate slot.
+
+- **Deleting Properties:** `O(1)` - Deleting a property from an object (`delete obj.key`) generally takes constant time.
+
+- **Checking Property Existence:** `O(1)` - Using the `in` operator (`'key' in obj`) or the `hasOwnProperty` method (`obj.hasOwnProperty('key')`) to check if a property exists in an object is a constant time operation.
+
+### Iterating Over Properties
+
+- **Iterating with for...in:** `O(n)` - The `for...in` loop iterates over all enumerable properties of an object, resulting in a linear time complexity.
+
+- **Object.keys(), Object.values(), Object.entries():** `O(n)` - The time complexity of these methods is linear, as they involves iterating over the object's properties.
+
+### Space Complexity Considerations
+
+- The space complexity of an object in JavaScript depends on the number of properties and the size of the data stored in those properties. Generally, the space complexity is O(n), where n is the number of properties. Each property requires memory for the key, the value, and any internal structure used to manage the property.
+
+- For example, if an object stores n numbers as values, the space complexity for storing the values alone is O(n). If the keys are also strings of varying lengths, their storage will contribute to the overall space complexity, but it's still considered O(n) in big O notation.
+
+## The Big O of Arrays
+
+**Arrays:** ordered lists.
+
+```js
+const arr = [10, [], true, {}, undefined];
+```
+
+### Basic Operations on Arrays
+
+_Time Complexity:_
+
+- **Accessing Elements:** `O(1)` - Accessing an element by its index in an array is a constant time operation.
+
+- **Inserting/Removing Elements at the End:** `O(1)` - Adding (`push`) or removing (`pop`) an element at the end of an array takes constant time, because it only involves updating the length and adding or removing an element.
+
+- **Inserting/Removing Elements at the Beginning:** `O(n)` - Adding (`unshift`) or removing (`shift`) an element at the beginning of an array takes linear time because all subsequent elements need to be re-indexed.
+
+- **Inserting and Removing Elements (Arbitrary Position):** `O(n)` - Inserting or removing elements at arbitrary positions involves shifting elements to make space or fill gaps.
+
+- **Iterating Over Elements:** `O(n)` - Iterating over all elements, whether using a `for` loop, `forEach`, or other iteration methods, requires linear time.
+
+## Big O Notation Examples
+
+### Find the Max Value in Array
+
+```js
+function findMax(arr) {
+  let max = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > max) max = arr[i];
+  }
+  return max;
+}
+```
+
+- **Time Complexity:** `O(n)` - Loop that iterates `n` times.
+- **Space Complexity:** `O(1)` - Constant amount of extra space.
+
+### Nested Loop
+
+```js
+function double(arr) {
+  let total = 0;
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      total += arr[i] * arr[j];
+    }
+  }
+  return total;
+}
+```
+
+- **Time Complexity:** `O(n^2)` - Two nested loops, each running `n` times.
+- **Space Complexity:** `O(1)` - Constant amount of extra space.
+
+### Factorial
+
+```js
+function factorial(n) {
+  if (n === 1) return 1;
+  return n * factorial(n - 1);
+}
+```
+
+- **Time Complexity:** `O(n)` - This function calls itself recursively `n` times.
+- **Space Complexity:** `O(n)` - Each recursive call adds a new frame to the call stack.
+
+### Recursive Fibonacci
+
+```js
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+```
+
+- **Time Complexity:** `O(2^n)` - Each call branches into two more calls, leading to an exponential growth in the number of calls.
+- **Space Complexity:** `O(n)` - The maximum depth of the call stack corresponds to the deepest series of recursive calls made by the function. This sequence results in a call stack depth of `n` before any of the calls can return and the stack can start unwinding.
+
+### Merge Two Sorted Arrays
+
+```js
+function mergeSortedArrays(arr1, arr2) {
+  let merged = [];
+  let i = 0;
+  let j = 0;
+
+  while (i < arr1.length && j < arr2.length) {
+    if (arr1[i] < arr2[j]) {
+      merged.push(arr1[i]);
+      i++;
+    } else {
+      merged.push(arr2[j]);
+      j++;
+    }
+  }
+
+  while (i < arr1.length) {
+    merged.push(arr1[i]);
+    i++;
+  }
+
+  while (j < arr2.length) {
+    merged.push(arr2[j]);
+    j++;
+  }
+
+  return merged;
+}
+```
+
+- **Time Complexity:** `O(n + m)` - This function iterates through both arrays once, where `n` is the length of `arr1` and `m` is the length of `arr2`.
+- **Space Complexity:** `O(n + m)` - The merged array can contain up to `n + m` elements.
